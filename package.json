@@ -32,6 +32,7 @@
     "@typechain/hardhat": "^2.2.0",
     "@types/fs-extra": "^9.0.12",
     "@types/lodash": "^4.14.165",
+    "@types/mocha": "^9.0.0",
     "@types/node": "^14.14.10",
     "@typescript-eslint/eslint-plugin": "^4.9.1",
     "@typescript-eslint/parser": "^4.9.1",

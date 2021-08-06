@@ -1,9 +1,9 @@
-
-import { Arbitrage, getBestCrossedMarket } from "../src/Arbitrage"
+import { getBestCrossedMarket } from "../src/Arbitrage"
 import { WETH_ADDRESS} from "../src/addresses"
 import { UniswappyV2EthPair } from "../src/UniswappyV2EthPair";
 import { BigNumber } from "ethers";
 import { ETHER } from "../src/utils";
+import { expect } from "chai";
 
 const MARKET_ADDRESS = "0x0000000000000000000000000000000000000001"
 const TOKEN_ADDRESS = "0x000000000000000000000000000000000000000a"
@@ -23,22 +23,17 @@ describe('Arbitrage', function() {
     groupedWethMarkets[1].setReservesViaOrderedBalances([ETHER, ETHER])
 
     const bestCrossedMarket = getBestCrossedMarket([groupedWethMarkets], TOKEN_ADDRESS);
-    if (bestCrossedMarket === undefined) {
-      fail("No crossed Market")
-      return
-    }
-    expect(bestCrossedMarket.volume).toEqual(BigNumber.from("208333333333333333"))
-    expect(bestCrossedMarket.profit).toEqual(BigNumber.from("0x012be1d487a428ce"))
+    const volume = bestCrossedMarket?.volume;
+    expect(volume).to.equal(BigNumber.from("208333333333333333"));
+    const profit = bestCrossedMarket?.profit;
+    expect(profit).to.equal(BigNumber.from("0x012be1d487a428ce"));
   });
   it('Calculate markets that do not cross', function() {
     groupedWethMarkets[0].setReservesViaOrderedBalances([ETHER, ETHER])
     groupedWethMarkets[1].setReservesViaOrderedBalances([ETHER, ETHER])
 
     const bestCrossedMarket = getBestCrossedMarket([groupedWethMarkets], TOKEN_ADDRESS);
-    if (bestCrossedMarket === undefined) {
-      fail("No crossed Market")
-      return
-    }
-    expect(bestCrossedMarket.profit.lt(0)).toBeTrue()
+    const profit = bestCrossedMarket?.profit;
+    expect(profit).to.be.lt(0);
   });
 });
