@@ -28,17 +28,13 @@ const TEST_VOLUMES = [
   ETHER.mul(10),
 ];
 
-
-export function getBestCrossedMarket(
-  crossedMarkets: Array<EthMarket>[],
-  tokenAddress: string,
-): CrossedMarketDetails {
-  let bestCrossedMarket: CrossedMarketDetails = { 
-      profit: BigNumber.from(-1), 
-      volume: BigNumber.from(-1),
-      tokenAddress: '',
-      buyFromMarket: crossedMarkets[0][0],
-      sellToMarket: crossedMarkets[0][0]
+export function getBestCrossedMarket(crossedMarkets: Array<EthMarket>[], tokenAddress: string): CrossedMarketDetails {
+  let bestCrossedMarket: CrossedMarketDetails = {
+    profit: BigNumber.from(-1),
+    volume: BigNumber.from(-1),
+    tokenAddress: "",
+    buyFromMarket: crossedMarkets[0][0],
+    sellToMarket: crossedMarkets[0][0],
   };
   for (const crossedMarket of crossedMarkets) {
     const sellToMarket = crossedMarket[0];

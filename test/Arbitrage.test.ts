@@ -22,17 +22,14 @@ describe("Arbitrage", function () {
     groupedWethMarkets[1].setReservesViaOrderedBalances([ETHER, ETHER]);
 
     const bestCrossedMarket = getBestCrossedMarket([groupedWethMarkets], TOKEN_ADDRESS);
-    const volume = bestCrossedMarket?.volume;
-    expect(volume).to.equal(BigNumber.from("208333333333333333"));
-    const profit = bestCrossedMarket?.profit;
-    expect(profit).to.equal(BigNumber.from("0x012be1d487a428ce"));
+    expect(bestCrossedMarket.volume).to.equal(BigNumber.from("208333333333333333"));
+    expect(bestCrossedMarket.profit).to.equal(BigNumber.from("0x012be1d487a428ce"));
   });
   it("Calculate markets that do not cross", function () {
     groupedWethMarkets[0].setReservesViaOrderedBalances([ETHER, ETHER]);
     groupedWethMarkets[1].setReservesViaOrderedBalances([ETHER, ETHER]);
 
     const bestCrossedMarket = getBestCrossedMarket([groupedWethMarkets], TOKEN_ADDRESS);
-    const profit = bestCrossedMarket?.profit;
-    expect(profit).to.be.lt(0);
+    expect(bestCrossedMarket.profit).to.be.lt(0);
   });
 });
