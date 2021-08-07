@@ -28,11 +28,18 @@ const TEST_VOLUMES = [
   ETHER.mul(10),
 ];
 
+
 export function getBestCrossedMarket(
   crossedMarkets: Array<EthMarket>[],
   tokenAddress: string,
-): CrossedMarketDetails | undefined {
-  let bestCrossedMarket: CrossedMarketDetails | undefined = undefined;
+): CrossedMarketDetails {
+  let bestCrossedMarket: CrossedMarketDetails = { 
+      profit: BigNumber.from(-1), 
+      volume: BigNumber.from(-1),
+      tokenAddress: '',
+      buyFromMarket: crossedMarkets[0][0],
+      sellToMarket: crossedMarkets[0][0]
+  };
   for (const crossedMarket of crossedMarkets) {
     const sellToMarket = crossedMarket[0];
     const buyFromMarket = crossedMarket[1];
@@ -40,7 +47,7 @@ export function getBestCrossedMarket(
       const tokensOutFromBuyingSize = buyFromMarket.getTokensOut(WETH_ADDRESS, tokenAddress, size);
       const proceedsFromSellingTokens = sellToMarket.getTokensOut(tokenAddress, WETH_ADDRESS, tokensOutFromBuyingSize);
       const profit = proceedsFromSellingTokens.sub(size);
-      if (bestCrossedMarket !== undefined && profit.lt(bestCrossedMarket.profit)) {
+      if (profit.lt(bestCrossedMarket.profit)) {
         // If the next size up lost value, meet halfway. TODO: replace with real binary search
         const trySize = size.add(bestCrossedMarket.volume).div(2);
         const tryTokensOutFromBuyingSize = buyFromMarket.getTokensOut(WETH_ADDRESS, tokenAddress, trySize);
@@ -120,7 +127,7 @@ export class Arbitrage {
       }
 
       const bestCrossedMarket = getBestCrossedMarket(crossedMarkets, tokenAddress);
-      if (bestCrossedMarket !== undefined && bestCrossedMarket.profit.gt(ETHER.div(1000))) {
+      if (bestCrossedMarket.profit.gt(ETHER.div(1000))) {
         bestCrossedMarkets.push(bestCrossedMarket);
       }
     }
