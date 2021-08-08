@@ -2,7 +2,10 @@ import { UniswappyV2EthPair } from "../src/UniswappyV2EthPair";
 import { WETH_ADDRESS } from "../src/addresses";
 import { BigNumber } from "ethers";
 import { ETHER } from "../src/utils";
+import chai from "chai";
 import { expect } from "chai";
+import { solidity } from "ethereum-waffle";
+chai.use(solidity);
 
 const MARKET_ADDRESS = "0x0000000000000000000000000000000000000001";
 const TOKEN_ADDRESS = "0x000000000000000000000000000000000000000a";
