@@ -30,8 +30,8 @@ const TEST_VOLUMES = [
 
 export function getBestCrossedMarket(crossedMarkets: Array<EthMarket>[], tokenAddress: string): CrossedMarketDetails {
   let bestCrossedMarket: CrossedMarketDetails = {
-    profit: BigNumber.from(-1),
-    volume: BigNumber.from(-1),
+    profit: BigNumber.from(0),
+    volume: BigNumber.from(0),
     tokenAddress: "",
     buyFromMarket: crossedMarkets[0][0],
     sellToMarket: crossedMarkets[0][0],
